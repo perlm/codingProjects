@@ -1,0 +1,58 @@
+
+
+*******************************************************************************
+Sat Jun 27 14:37:26 2015
+
+
+FIT:    data read from 'data/lineupHeight.data' u 1:4
+        format = x:z
+        #datapoints = 250
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+
+
+*******************************************************************************
+Sat Jun 27 14:37:29 2015
+
+
+FIT:    data read from 'data/lineupHeight.data' u 1:4
+        format = x:z
+        #datapoints = 250
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+fitted parameters initialized with current variable values
+
+
+
+ Iteration 0
+ WSSR        : 2.42219e+06       delta(WSSR)/WSSR   : 0
+ delta(WSSR) : 0                 limit for stopping : 1e-05
+ lambda	  : 2.55131
+
+initial set of free parameter values
+
+a               = 1
+b               = 1
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 20590.2
+rel. change during last iteration : -2.40822e-13
+
+degrees of freedom    (FIT_NDF)                        : 248
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 9.1118
+variance of residuals (reduced chisquare) = WSSR/ndf   : 83.025
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+
+a               = 100.408          +/- 3.007        (2.995%)
+b               = 0.589677         +/- 0.8674       (147.1%)
+
+
+correlation matrix of the fit parameters:
+
+               a      b      
+a               1.000 
+b              -0.981  1.000 

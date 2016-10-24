@@ -1,0 +1,32 @@
+0 Name 
+1 Carbohydrate, by difference 
+2 Water 
+3 Sodium, Na 
+4 Phosphorus, P 
+5 Potassium, K 
+6 Cholesterol 
+7 Fiber, total dietary 
+8 Protein 
+9 Niacin 
+10 Thiamin 
+11 Riboflavin 
+12 Sugars, total 
+13 Vitamin C, total ascorbic acid 
+14 Magnesium, Mg 
+15 Vitamin B-12 
+16 Energy 
+17 Vitamin B-6 
+18 Vitamin A, IU 
+19 Vitamin A, RAE 
+20 Fatty acids, total polyunsaturated 
+21 Folate, DFE 
+22 Iron, Fe 
+23 Calcium, Ca 
+24 Fatty acids, total monounsaturated 
+25 Fatty acids, total saturated 
+26 Total lipid (fat) 
+27 Zinc, Zn 
+
+
+Notes:
+	- col 26 is not really the sum of 20+24+25, but it's close.

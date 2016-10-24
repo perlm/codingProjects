@@ -1,0 +1,111 @@
+#!/usr/bin/perl -w
+
+#Ideas for v2 - weeding out collaborating profs
+#Weighting for early career v late.  Discount everything after first last-author occurence?
+
+use LWP::Simple;
+
+my $utils = "http://www.ncbi.nlm.nih.gov/entrez/eutils";
+my $db     = "Pubmed";
+my $report = "abstract";
+my $esearch = "$utils/esearch.fcgi?" . "db=$db&retmax=1&usehistory=y&term=";
+
+$round = 1;
+while ($round<=1)
+{
+
+if ($round == 1)
+{
+print "Author Name? Example: Smith AB\n";
+$query  = <>;
+chomp $query;
+}
+else
+{
+$query = $advisor;
+}
+
+$self=$query;
+my @words=();
+@words = split(' ',$query);	#necessary since multi-line author list might separate first/last name
+$query = $query . "[AU]";
+
+my $esearch_result = get($esearch . $query);
+$esearch_result =~ 
+  m|<Count>(\d+)</Count>.*<QueryKey>(\d+)</QueryKey>.*<WebEnv>(\S+)</WebEnv>|s;
+
+#print "$esearch_result\n";
+
+my $Count    = $1;	#Number of Papers
+my $QueryKey = $2;	#Number of search terms?
+my $WebEnv   = $3;
+#print "Number of Papers = $Count\n";
+if ($Count==0){print "No Papers!\n" and exit;}
+
+my $retstart = 0;
+my $retmax = 3;
+my $efetch_result = ();
+
+while ($retstart<$Count)
+{
+my $efetch = "$utils/efetch.fcgi?" .
+               "rettype=$report&retmode=text&retstart=$retstart&retmax=$retmax&" .
+               "db=$db&query_key=$QueryKey&WebEnv=$WebEnv";
+#my $efetch_result = get($efetch);
+$temp = get($efetch);
+$efetch_result = $efetch_result . $temp;
+$retstart+=$retmax;
+}
+#print "$efetch_result";
+
+#find authorship line and extract (at this point only last) authors.
+my @lines = ();
+@lines = split("\n\n", $efetch_result);
+my @authors = ();
+my @lasts = ();
+	foreach $line (@lines)
+	{
+		if ($line =~ m/($words[0])/)
+		{
+		#print "$line\n";
+		@authors = split (",", $line);
+			foreach $author (@authors)
+			{
+			$check1 = substr($author,0,1);
+			if ( $check1 eq " ") {$author = substr($author,1);}
+			$check2 = substr($author,-1);
+			if ( $check2 eq ".") {$author = substr($author,0,-1);}
+			$last =$author;
+			}
+		#print "$last\n";
+		push (@lasts, $last);	#output comes reverse chronological.  First in list is most recent.
+		}
+	}
+
+#Using Last Authors, guess Advisor!
+#In v1, just whoever shows up last most!
+
+my %votes = ();
+my $own = 0;
+
+foreach $name (@lasts)
+{
+if ($name eq $self){$own++;}
+else {$votes{$name}++;}
+}
+
+$max=0;
+foreach $key (keys %votes)
+{
+	if ($votes{$key}>$max)
+	{
+	$max=$votes{$key};
+	$advisor = $key;
+	}
+#print "$key $votes{$key}\n";
+}
+$number = $Count - $own;
+print "Advisor = $advisor (Last author of $max of his/her $number non-last-author papers)\n";
+
+$round++;
+}

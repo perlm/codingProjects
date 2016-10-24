@@ -1,0 +1,11 @@
+Clusters= 2  avg silhouette score: 0.40548056711
+Clusters= 3  avg silhouette score: 0.34946908384
+Clusters= 4  avg silhouette score: 0.364195692327
+Clusters= 5  avg silhouette score: 0.368934125923
+Clusters= 6  avg silhouette score: 0.381118849822
+Clusters= 7  avg silhouette score: 0.35850483875
+Clusters= 8  avg silhouette score: 0.354902531304
+Clusters= 9  avg silhouette score: 0.320560082578
+Clusters= 10  avg silhouette score: 0.286453580746
+Clusters= 11  avg silhouette score: 0.280635837727
+Clusters= 12  avg silhouette score: 0.242050697902
