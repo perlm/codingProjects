@@ -1,0 +1,71 @@
+---
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+fontsize: 10pt
+---
+
+
+``` {r echo = FALSE , warning=FALSE, message=FALSE, include = FALSE}
+knitr::read_chunk("analysis.R")
+```
+
+---
+title: "`r 'Analysis of Passenger Air Travel'`"
+---
+
+##Background
+The Bureau of Transportation Statistics data set contains information on domestic passenger air travel. Specfically, for each flight, the data set includes the origin and destination airport, the date of travel, the duration and delay of travel, and the airline carrier, amongst other details. To make analysis of this large data set tractable, I am going to focus on data from the year 2015, and my primary interest will be looking into flight delays (which I define as arrival >15 minutes after scheduled).
+
+As a preliminary step, I describe below the average number of flights per day, sorted by day of week, month, Airline, and Airport, in order to assess data completeness.
+
+```{r setup, warning = FALSE, echo = FALSE}
+```
+
+```{r frequency, warning = FALSE, echo = FALSE}
+```
+
+The plot beneath shows the number of flights for each day of 2015, with the blue lines indicating US Holidays. One potential hypothesis is that there are a larger number of flights around holidays, but this does not seem to be the case.
+
+```{r frequency_plot, warning = FALSE, echo = FALSE, fig.height = 4, fig.width = 12, results = "hide", fig.align="center"}
+```
+
+\newpage
+
+##Delay Rate
+In the charts below, I describe the rate at which flights are delayed by day of week, month, airline, and airport. It is interesting to note that there are fewer flights on Saturdays, and these flights are less often delayed. This suggests a correlation between number of flights and delays, which could be investigated as a next step at the airport or airline level.
+
+```{r lateness, warning = FALSE, echo = FALSE}
+```
+
+The plot below shows rate of delay by day, and suggests a spike in delays around Christmas and New Years, as well as an increase in February around President's Day. The full data set contains information on delay cause, and it would be interesting as a next step to investigate that as well-- it seems likely that the delays in February are due to weather, while the delays around holidays are due to high traffic.
+
+```{r lateness_plot, warning = FALSE, echo = FALSE, fig.height = 4, fig.width = 12, results = "hide", fig.align="center"}
+```
+
+\newpage
+
+##Delay Rate Model
+I was interested in building a model to predict the probability that a given flight would be delayed. To do this, I consider each flight in the 2015 data set a sample, split this set randomly into a training set and holdout set, and trained a regularized logistic regression on the binary dependent variable (delayed or not delayed). As indepedent variables, I used the airline, day of week, month, and average delay rate for the destination and origin airports in the training set. 
+
+The coefficients determined by the model are listed below. Airports with high delay rates as origins or departures are strong positive predictors of delay, and different periods of time and airlines have reasonable coefficients given the charts above.
+
+```{r model, warning = FALSE, echo = FALSE}
+```
+
+The output of the model is summarized in the two plots below. The top plot describes the model performance. This model was able to predict delays in the holdout set better than random- the AUC=0.6 describes the quality with which the predictions rank-orders the flights, and the calibration plot shows quantitative agreement between predicted delay rates and the actual delay rates in the holdout set. The lower plot is the distribution of lateness probability for each flight in the holdout set, colored by airline. 
+
+As a next step, a model could be investigated with additional features (simplifying month to season, sorting airports by size, describing the route frequency or distance, proximity to holidays) or using another methodology which might be able to pick up on more subtle interactions between features.
+
+```{r model_plot, warning = FALSE, echo = FALSE, fig.height = 8, fig.width = 12, results = "hide", fig.align="center"}
+```
+
+\newpage
+
+##Geographic Visualizations
+Below are two plots which provide a visualization of this data. The first plots each airport, with the size proportional to the number of departing flights, and the color indicating the delay rate. The second shows line segments connecting airports, with the thickness of the line segment indicating the frequency of that route.
+
+
+```{r geo, warning = FALSE, echo = FALSE, fig.height = 10, fig.width = 12, results = "hide", fig.align="center"}
+```
+
+
