@@ -15,13 +15,6 @@ suppressMessages(library(glmnet, warn.conflicts = FALSE, quietly=TRUE))
 # data from:
 # http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time
 
-# number of flights by dow, airport and carrier, + plot.
-# fewer plots?
-# set it up with plots and crosstabs.
-# add in a statistical test to show saturday is less delayed?
-# flight speed
-# predictive model of plane delay!
-
 setwd('/Users/jasonperlmutter/Desktop/temp/other_project')
 
 # load in some csv's
@@ -60,7 +53,7 @@ colnames(df)<-c("CARRIER","DEST","ORIGIN","DAY_OF_WEEK","FL_DATE","ARR_DELAY_NEW
 df$Airline <- as.character(df$Airline)
 df$Airline[df$Airline=='US Airways Inc. (Merged with America West 9/05. Reporting for both starting 10/07.)'] <- 'US Airways Inc.'
 
-# remove na's --- I assume flights that were cancelled, or not in dictionaries-- could double check this later.
+# remove na's 
 df2 <- na.omit(df)
 
 
@@ -79,6 +72,7 @@ c <- subset(c,Freq>0)
 c<-c[1:10,]
 colnames(c)<-c('Carrier','Avg Number of Flights Per Day')
 
+# Sanity check--- Rate planes arrive should equal rate planes depart. 
 d <- merge(
   as.data.frame(xtabs(df2,formula=~Origin_Airport)/nrow(df2[!duplicated(df2$FL_DATE),])),
   as.data.frame(xtabs(df2,formula=~Dest_Airport)/nrow(df2[!duplicated(df2$FL_DATE),])),
@@ -91,7 +85,7 @@ colnames(d)<-c('Airport','Avg Departing Per Day','Avg Arrive Per Day','Total Fli
 kable(a,digits=0, caption='Flights by Day of week',row.names=FALSE)
 kable(b,digits=0, caption='Flights by Month',row.names=FALSE)
 kable(c,digits=0, caption='Flights by Airline',row.names=FALSE)
-kable(d,digits=0, caption='Flights by Airport',row.names=FALSE)
+kable(d[,c(1,4)],digits=0, caption='Flights by Airport',row.names=FALSE)
 
 
 # ---- frequency_plot ----
@@ -160,14 +154,6 @@ ggplot(data=df2, aes(x=FL_DATE,y=delayed)) +
 
 # ---- model ----
 # for a bit of fun--- make a model!
-# try classification - prob of delay.
-
-# potential new features -- 
-# season instead of month
-# airport size
-# route frequency
-# route distance
-# proximity to thanksgiving/Christmas/other 
 
 df2$dow<-factor(df2$dow,ordered = FALSE)
 df2$month_word<-factor(df2$month_word,ordered = FALSE)
@@ -242,7 +228,17 @@ c <- as.data.frame(xtabs(df2,formula= ~ORIGIN))
 d <- as.data.frame(xtabs(df2,formula= delayed~ORIGIN)/xtabs(df2,formula= ~ORIGIN))
 e <- merge(merge(c,d,by="ORIGIN"),airports,by.y="iata",by.x="ORIGIN")
 
+# calc fractions
+# nrow(subset(df2,Origin_Airport %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International','San Francisco International','Phoenix Sky Harbor International','George Bush Intercontinental','McCarran International','Minneapolis-St Paul Intl')|Dest_Airport %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International','San Francisco International','Phoenix Sky Harbor International','George Bush Intercontinental','McCarran International','Minneapolis-St Paul Intl')))/nrow(df2)
+# nrow(subset(df2,Origin_Airport %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International','San Francisco International','Phoenix Sky Harbor International','George Bush Intercontinental','McCarran International','Minneapolis-St Paul Intl')|Dest_Airport %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International')))/nrow(df2)
+
 # cutting off AK/HI/PR
+b$airport.x<-as.character(b$airport.x)
+b$airport.y<-as.character(b$airport.y)
+
+#b$airport_color <- ifelse(b$airport.x %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International','San Francisco International','Phoenix Sky Harbor International','George Bush Intercontinental','McCarran International','Minneapolis-St Paul Intl'),b$airport.x,(ifelse(b$airport.y %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International','San Francisco International','Phoenix Sky Harbor International','George Bush Intercontinental','McCarran International','Minneapolis-St Paul Intl'),b$airport.y,'other')))
+b$airport_color <- ifelse(b$airport.x %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International'),b$airport.x,(ifelse(b$airport.y %in% c('William B Hartsfield-Atlanta Intl','Chicago O\'Hare International','Dallas-Fort Worth International','Denver Intl','Los Angeles International'),b$airport.y,'other')))
+
 
 plots <- list()
 plots[[1]] <- ggplot() + 
@@ -255,10 +251,11 @@ plots[[1]] <- ggplot() +
   scale_color_gradient(name='Delay Rate',limits=c(0.15, 0.25), low="red")
 plots[[2]] <-  ggplot() + 
   geom_polygon(data = usa, aes(x=long, y = lat, group = group),fill = NA, color = "black") + coord_fixed(1.3) +
-  geom_segment(data=b,aes(x=long.x,y=lat.x,xend=long.y,yend=lat.y,size=Count),alpha=0.1) + 
-  xlab('Longitude') + ylab('Latitude') + scale_size(range=c(0.01,4),guide='none') +
+  geom_segment(data=subset(b,airport_color!='other'),aes(x=long.x,y=lat.x,xend=long.y,yend=lat.y,size=Count,color=airport_color),alpha=0.2) + 
+  xlab('Longitude') + ylab('Latitude') + scale_size(range=c(0.1,3),guide='none') +
+  guides(colour = guide_legend(title='Airport',override.aes = list(size=5,alpha=1))) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_blank()) + 
   xlim(c(-125,-65)) + ylim(c(25,55))
-  multiplot(plotlist = plots, cols=1)
+multiplot(plotlist = plots, cols=1)
 
