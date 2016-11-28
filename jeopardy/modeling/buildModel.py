@@ -53,7 +53,7 @@ def buildLogisticModel(X_scaled,Y,X_fix):
 
 	# optimize hyperparameter	
 	la = optimizeLambdaLogistic(X_train, X_test, y_train, y_test,'l1')
-	lb = optimizeLambdaLogistic(X_train, X_test, y_train, y_test,'l2')	# consistently less good.
+	#lb = optimizeLambdaLogistic(X_train, X_test, y_train, y_test,'l2')	# consistently less good.
 
 	# train model using hyperparameter
 	model = linear_model.LogisticRegression(C=la['C'], penalty='l1')
@@ -78,12 +78,22 @@ def buildLogisticModel(X_scaled,Y,X_fix):
 
 	return model
 
+
+def predict(X_scaled,model):
+        y_prob = model.predict_proba(X_scaled)[:,1]
+	#print X_scaled[-20:]
+	#print y_prob[-20:]
+	print "Avg of predictions= ", np.mean(y_prob)
+	return y_prob[-1:]
+
+
 def readRawFile():
 	gameData = pd.read_csv('data/raw.data',delimiter=',',header=None, names=['g', 'gameNumber', 'date', 'winningDays', 'winningDollars', 'winner', 'gender', 'age', 'name', 'career', 'location'])
 	return gameData
 
-def processData(df):
+def constructFeatures(dff):
 
+	df = dff.copy()
 	# construct additional features
 	df['avePrevDollars'] = df['winningDollars']/df['winningDays']
 	df['prevWins_capped'] = np.minimum(df['winningDays'],10)
@@ -108,6 +118,10 @@ def processData(df):
 	# to check counts
 	#df['age_bucket'].value_counts()
 
+	return df
+
+
+def processData(df,scaler=None):
 	X = df[['prevWins_capped','avePrevDollars','gender','age_bucket','cityofchampions','jobs','relative_year']]
 	#X = df[['prevWins_capped','avePrevDollars','gender','age_bucket','cityofchampions','jobs','Avg_Dollars_buckets']]
 
@@ -125,18 +139,57 @@ def processData(df):
 	#print X_fix.head(n=5)
 	
 
-	scaler = preprocessing.StandardScaler().fit(X_fix)	#this allows me to re-use the scaler...
-	X_scaled = scaler.transform(X_fix) 
+	if scaler is None:
+		scaler = preprocessing.StandardScaler().fit(X_fix)	#this allows me to re-use the scaler...
+		X_scaled = scaler.transform(X_fix) 
+	else:
+		X_scaled = scaler.transform(X_fix) 
+
 	#print X_scaled
 
 	Y = df[['winner']]
+       	print "Win Rate in data:\n", Y['winner'].value_counts(), "\n"
 	#X = np.matrix.transpose(np.vstack((prevWins, totalPrevDollars)))
 
 	return X,X_scaled, Y, scaler, X_fix
 
+def addRow(df, features):
+
+        #gameData = pd.read_csv('data/raw.data',delimiter=',',header=None, names=['g', 'gameNumber', 'date', 'winningDays', 'winningDollars', 'winner', 'gender', 'age', 'name', 'career', 'location'])
+	#features = {'date':date,'days':winningDays,'dollars':winningDollars,'gender':gender,'age':age,'name':name.replace(',',' '),'career':career.replace(',',' '),'location':location.replace(',',' ')}
+
+	# given a dictionary of values for new row, turn it into a matching dataframe
+	nr = {'g':pd.Series([0]),
+		'gameNumber':pd.Series([0]),
+		'date':pd.Series([features['date']]),
+		'winningDays':pd.Series([int(features['days'])]),
+		'winningDollars':pd.Series([int(features['dollars'])]),
+		'winner':pd.Series([0]),
+		'gender':pd.Series([features['gender']]),
+		'age':pd.Series([features['age']]),
+		'name':pd.Series([features['name']]),
+		'career':pd.Series([features['career']]),
+		'location':pd.Series([features['location']])}
+	newrow = pd.DataFrame(nr)
+
+	# column order looks like dict, rather than dataframe.
+	newrow2 = newrow[['g', 'gameNumber', 'date', 'winningDays', 'winningDollars', 'winner', 'gender', 'age', 'name', 'career', 'location']]
+
+	#print df.head(n=5)
+	#print df.tail(n=5)
+	#print features
+	#print newrow2.tail(n=5)
+
+	df2 = pd.concat([df, newrow2])
+	print df2.tail(n=5)
+
+	return(df2)
+
 if __name__ == '__main__':
 	df = readRawFile()
+	df = constructFeatures(df)
 	X, X_scaled, Y, scaler, X_fix = processData(df)
 	model = buildLogisticModel(X_scaled,Y,X_fix)
+
 
 

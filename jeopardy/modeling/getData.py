@@ -244,7 +244,9 @@ def getCurrentStatus():
 	if first in nameAgeDict:age = round(nameAgeDict[first],1)
 	else:age = 36.8
 
-	return date, winningDays, winningDollars, gender, age, name.replace(',',' '), career.replace(',',' '), location.replace(',',' ')
+        features = {'date':date,'days':winningDays,'dollars':winningDollars,'gender':gender,'age':age,'name':name.replace(',',' '),'career':career.replace(',',' '),'location':location.replace(',',' ')}
+
+	return features
 
 
 if __name__ == '__main__':

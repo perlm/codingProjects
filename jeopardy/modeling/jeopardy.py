@@ -3,19 +3,30 @@
 # so this will be the master
 
 from getData import *
+from buildModel import *
+from tweetIt import *
 
 def main():
 
 	# download 
-	getRawData()
+	#getRawData()
 
-	# model
-	# I just made it in R. Code it to work in python.
+	# model - df is from file. df2 is with features. x, scaled, fixed are after processing.
+        d = readRawFile()
+        d2 = constructFeatures(d)
+        X, X_scaled, Y, scaler, X_fix = processData(d2)
+        model = buildLogisticModel(X_scaled,Y,X_fix)
 
-	# tweet
-	date, winningDays, winningDollars, gender, age, name, career, location = getCurrentStatus()
-	features = {'date':date,'days':winningDays,'dollars':winningDollars,'gender':gender,'age':age,'name':name,'career':career,'location':location}
-	predict(features)
+	# predict - df3 is with additional row for predictions. then process in exact same way.
+	features = getCurrentStatus()
+	d3 = addRow(d,features)
+        d4 = constructFeatures(d3)
+        X, X_scaled, Y, scaler, X_fix = processData(d4,scaler)
+	prob = predict(X_scaled,model)
+	features['prob'] = prob
+
+	# tweet it!
+	tweetProb(features)
 
 
 
