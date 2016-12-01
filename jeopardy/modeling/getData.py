@@ -211,7 +211,8 @@ def getCurrentStatus():
 
 	assert ((int(entry[5])==1 and win==0) or (int(entry[5])==-1 and win!=0))
 
-	if entry[5]==1:
+	#print "returning or not=", entry[5]
+	if int(entry[5])==1:
 		winningDays 	= int(entry[3]) + 1
 		winningDollars 	= int(entry[4]) + maxScore
 		career 		= entry[9]

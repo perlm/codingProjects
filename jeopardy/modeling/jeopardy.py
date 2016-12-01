@@ -5,11 +5,12 @@
 from getData import *
 from buildModel import *
 from tweetIt import *
+import datetime
 
 def main():
 
 	# download 
-	#getRawData()
+	getRawData()
 
 	# model - df is from file. df2 is with features. x, scaled, fixed are after processing.
         d = readRawFile()
@@ -26,7 +27,10 @@ def main():
 	features['prob'] = prob
 
 	# tweet it!
-	tweetProb(features)
+	daysOld = datetime.date.today() - datetime.datetime.strptime(features['date'],'%Y-%m-%d').date()
+	print "Last game is ", daysOld, " days old. From ", features['date']
+	if daysOld.days <= 3:
+		tweetProb(features)
 
 
 
