@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 import requests, string, time, re, os, sys,datetime
 
 #####
-# The objective of this script is to pull data from the Jeopardy archive so that it can analyzed and I can make a predictive model.
+# The objective of this script is to scrape data from the Jeopardy archive so that it can beanalyzed and I can make a predictive model.
 #####
 
 def getNameDictionary():
+	# I separately have a dictionary of gender and age by name. Pull in this info for modeling.
 	# make these global, so I don't need to remember to pass them around or reread the file
 	global nameGenderDict
 	global nameAgeDict
@@ -22,6 +23,7 @@ def getNameDictionary():
 
 
 def getSoup(url):
+	# scraping
 	while True:
 		try:
 			r = requests.get(url)
@@ -31,6 +33,8 @@ def getSoup(url):
 
 
 def getRawData():
+	# check csv to find most recent game in my data, and search for new games to scrape and add in
+
 	#nameGenderDict, nameAgeDict = getNameDictionary() 
 	getNameDictionary() 
 
@@ -51,7 +55,8 @@ def getRawData():
 		f1.write(epInfo)
 
 
-def getEpisodeInfo(g,):
+def getEpisodeInfo(g):
+	# goes though each game and pulls out features for modeling.
 
 	# download game and check that it's valid
 	baseURL1='http://www.j-archive.com/showgame.php?game_id={0}'
@@ -170,9 +175,9 @@ def getEpisodeInfo(g,):
 
 
 def getCurrentStatus():
+	# the format the new champ is different- there is no existing page to scrape yet.
+	# for the purposes of prediction, I want what the new champ in the same format.
 
-	# for the purposes of prediction, I want what the new champ looks like before the next episode page is generated.
-	# do that here 
 	getNameDictionary()
 
 	maxDate = '2004-10-06'
@@ -211,7 +216,7 @@ def getCurrentStatus():
 
 	assert ((int(entry[5])==1 and win==0) or (int(entry[5])==-1 and win!=0))
 
-	#print "returning or not=", entry[5]
+	#print "returning or not=", entry[5], win
 	if int(entry[5])==1:
 		winningDays 	= int(entry[3]) + 1
 		winningDollars 	= int(entry[4]) + maxScore
@@ -223,6 +228,12 @@ def getCurrentStatus():
 		winningDays	= 1
 		winningDollars	= maxScore
 		
+		# at the top (where names/careers are) champ is last
+		# at the bottom (where final scores are) champ is first
+		# if win==0 then it's not here. if win==1 then fine. if win==2, then set to zer0.
+
+		if win==2:win=0
+
 		x=0
 		for p in r.findAll('p', attrs={"class": "contestants"}):
 			intro= p.get_text().replace(',','')

@@ -4,6 +4,9 @@ import pandas as pd
 from sklearn import preprocessing, feature_extraction, linear_model, metrics, model_selection
 import math
 
+####
+# This file contains functions for building the classification model.
+###
 
 def optimizeLambdaLogistic(X_train, X_test, y_train, y_test,L='l1'):
 	# use CV to optimize regularization hyperparameter! (using either L1 or L2) (lambda is inverse C here)
@@ -80,6 +83,8 @@ def buildLogisticModel(X_scaled,Y,X_fix):
 
 
 def predict(X_scaled,model):
+	# for a given model and independent data, generate predictions
+
         y_prob = model.predict_proba(X_scaled)[:,1]
 	#print X_scaled[-20:]
 	#print y_prob[-20:]
@@ -88,13 +93,14 @@ def predict(X_scaled,model):
 
 
 def readRawFile():
+	# read in csv and return pandas dataframe
 	gameData = pd.read_csv('data/raw.data',delimiter=',',header=None, names=['g', 'gameNumber', 'date', 'winningDays', 'winningDollars', 'winner', 'gender', 'age', 'name', 'career', 'location'])
 	return gameData
 
 def constructFeatures(dff):
+	# take pandas dataframe and manipulate to construct additional features.
 
 	df = dff.copy()
-	# construct additional features
 	df['avePrevDollars'] = df['winningDollars']/df['winningDays']
 	df['prevWins_capped'] = np.minimum(df['winningDays'],10)
 	df['relative_year'] = 2017-df['date'].str[:4].apply(int)
@@ -122,6 +128,8 @@ def constructFeatures(dff):
 
 
 def processData(df,scaler=None):
+	# take dataframe and reformat for sci-kit learn including normalization
+
 	X = df[['prevWins_capped','avePrevDollars','gender','age_bucket','cityofchampions','jobs','relative_year']]
 	#X = df[['prevWins_capped','avePrevDollars','gender','age_bucket','cityofchampions','jobs','Avg_Dollars_buckets']]
 
@@ -154,6 +162,7 @@ def processData(df,scaler=None):
 	return X,X_scaled, Y, scaler, X_fix
 
 def addRow(df, features):
+	# add in row of new data which needs to be predicted.
 
         #gameData = pd.read_csv('data/raw.data',delimiter=',',header=None, names=['g', 'gameNumber', 'date', 'winningDays', 'winningDollars', 'winner', 'gender', 'age', 'name', 'career', 'location'])
 	#features = {'date':date,'days':winningDays,'dollars':winningDollars,'gender':gender,'age':age,'name':name.replace(',',' '),'career':career.replace(',',' '),'location':location.replace(',',' ')}

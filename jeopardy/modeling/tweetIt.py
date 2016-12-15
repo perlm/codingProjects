@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+##
+# Take the most recent prediction and tweet it, using the python api
+##
+
 from twitter import *
 import ConfigParser
 

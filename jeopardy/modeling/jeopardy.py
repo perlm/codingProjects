@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
-# so this will be the master
+##
+# This is the master script which will call functions from the other scripts.
+# Currently setup to check for new data, scrape, model, and publish.
+# scheduled to run on cron.
+## 
 
 from getData import *
 from buildModel import *
@@ -29,6 +33,7 @@ def main():
 	# tweet it!
 	daysOld = datetime.date.today() - datetime.datetime.strptime(features['date'],'%Y-%m-%d').date()
 	print "Last game is ", daysOld, " days old. From ", features['date']
+
 	if daysOld.days <= 3:
 		tweetProb(features)
 
