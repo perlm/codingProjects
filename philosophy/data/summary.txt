@@ -1,0 +1,100 @@
+9304	Initiation into Philosophy	Emile Faguet	1914
+16406	An Introduction to Philosophy	George Stuart Fullerton	1915
+25110	The Approach to Philosophy	Ralph Barton Perry	1905
+20500	A Short History of Greek Philosophy	John Marshall	1891
+7514	A Little Book of Stoicism	St. George Stock	
+17556	Sextus Empiricus and Greek Scepticism	Mary Mills Patrick	1897
+11100	History Of Modern Philosophy	Richard Falckenberg	1893
+16712	Some Turns of Thought in Modern Philosophy	George Santayana	1933
+5246	Modern French Philosophy: A Study Of The Development Since Comte	J. Alexander Gunn	1922
+13316	The Theological Tractates and The Consolation of Philosophy	Anicius Manlius Severinus Boethius	500
+5637	Literary and Philosophical Essays	 Various	
+1998	Thus Spake Zarathustra	Friedrich Nietzsche	1869
+14357	Rudolph Eucken	Abel J. Jones	1846
+4754	The Philosophy of Despair	David Starr Jordan	1902
+1497	The Republic	Plato	-400
+2412	The Categories	Aristotle	-350
+4280	The Critique of Pure Reason	Immanuel Kant	1781
+11984	A Pluralistic Universe	William James	1909
+22283	Mind and Motion and Monism	George John Romanes	1895
+5827	The Problems of Philosophy	Bertrand Russell	1912
+35722	Ontology or the Theory of Being	Peter Coffey	1918
+1726	Theaetetus	Plato	-400
+59	A Discourse on Method	René Descartes	1541
+19796	Discourse on the Method of Rightly	RenÃ© Descartes	1541
+4723	A Treatise Concerning the Principles of Human Knowledge	George Berkeley	1685
+4724	Three Dialogues between Hylas and Philonous in Opposition to Sceptics and Atheists	George Berkeley	1685
+9662	An Enquiry Concerning Human Understanding	David Hume	1777
+4705	A Treatise of Human Nature	David Hume	1737
+1016	On the Improvement of the Understanding	Baruch Spinoza  [Benedict de Spinoza]	1677
+16833	Auguste Comte and Positivism	John-Stuart Mill	1865
+37090	Our Knowledge of the External World as a Field for Scientific Method in Philosophy	Bertrand Russell	1914
+23422	Essays Towards a Theory of Knowledge	Alexander Philip	1915
+32547	Essays in Radical Empiricism	William James	1901
+2529	The Analysis of Mind	Bertrand Russell	1921
+26495	A System Of Logic, Ratiocinative And Inductive (Vol. 1 of 2)	John Stuart Mill	1843
+35420	A System of Logic: Ratiocinative and Inductive	John Stuart Mill	1843
+35421	A System of Logic: Ratiocinative and Inductive	John Stuart Mill	1843
+27942	A System Of Logic, Ratiocinative And Inductive	John Stuart Mill	1843
+30866	Analysis of Mr. Mill's System of Logic	William Stebbing	1867
+28696	Symbolic Logic	Lewis Carroll	1897
+4763	The Game of Logic	Lewis Carroll	1887
+31796	Logic, Inductive and Deductive	William Minto	1893
+18440	Logic	Carveth Read	1898
+1635	Ion	Plato	-400
+6763	The Poetics	Aristotle	-350
+1974	Poetics	Aristotle	-350
+36208	Lectures on the true, the beautiful and the good	Victor Cousin	1872
+6798	The Aesthetical Essays	Frederich Schiller	1800
+4352	Laughter: An Essay on the Meaning of the Comic	Henri Bergson	1847
+25012	The Case Of Wagner, Nietzsche Contra Wagner, and Selected Aphorisms.	Friedrich Nietzsche.	1911
+18188	Homer and Classical Philology	Friedrich Nietzsche	1910
+6366	The Principles Of Aesthetics	Dewitt H. Parker	1920
+4320	An Enquiry Concerning the Principles of Morals	David Hume	1912
+3800	The Ethics	Benedict de Spinoza	1541
+919	The Ethics [Part I]	Benedict de Spinoza	1541
+920	The Ethics [Part II]	Benedict de Spinoza	1541
+948	The Ethics [Part III]	Benedict de Spinoza	1541
+971	The Ethics [Part IV]	Benedict de Spinoza	1541
+975	The Ethics [Part V]	Benedict de Spinoza	1541
+22364	The Philosophy of the Moral Feelings	John Abercrombie	1838
+4363	Beyond Good and Evil	Friedrich Nietzsche	1909
+19634	Beyond Good and Evil	Friedrich Nietzsche	1909
+11224	Utilitarianism	John Stuart Mill	1879
+27597	The English Utilitarians, Volume I.	Leslie Stephen	1900
+1656	Apology	Plato	-400
+6762	Politics	Aristotle	-350
+1232	The Prince	Nicolo Machiavelli	1469
+7370	Second Treatise of Government	John Locke	1690
+61	The Communist Manifesto	Karl Marx and Friedrich Engels	1888
+21565	The Queen's Matrimonial Ladder	William Hone	1820
+34901	On Liberty	John Stuart Mill	1806
+5669	Considerations on Representative Government	John Stuart Mill	1859
+12004	Essays on some unsettled Questions of Political Economy	John Stuart Mill	1844
+4776	Political Ideals	Bertrand Russell	1917
+32168	An Introduction to the Philosophy of Law	Roscoe Pound	1921
+852	Democracy and Education	John Dewey	1916
+25172	Moral Principles in Education	John Dewey	1909
+1642	Euthyphro	Plato	-400
+4583	Dialogues Concerning Natural Religion	David Hume	1779
+989	A Theological-Political Treatise [Part I]	Benedict of Spinoza	1541
+990	A Theological-Political Treatise [Part II]	Benedict of Spinoza	1541
+991	A Theological-Political Treatise [Part III]	Benedict of Spinoza	1541
+992	A Theological-Political Treatise [Part IV]	Benedict of Spinoza	1541
+21995	Philosophy and Religion	Hastings Rashdall	1909
+6799	The Philosophical Letters	Frederich Schiller	1870
+19322	The Antichrist	F. W. Nietzsche	1918
+7836	Jewish History	S. M. Dubnow	1492
+20814	The Psychology of Nations	G.E. Partridge	1919
+12956	A History of Indian Philosophy, Vol. 1	Surendranath Dasgupta	1922
+5173	The Religion of the Samurai	Kaiten Nukariya	1913
+10214	Introduction to the Philosophy and Writings of Plato	Thomas Taylor	1784
+13888	Bacon	Richard William Church	1884
+10378	Autobiography	John Stuart Mill	1806
+12002	Review of the Work of Mr John Stuart Mill Entitled, 'Examination of Sir William Hamilton's Philosophy.'	George Grote	1868
+20887	Critical Miscellanies, Vol. 3 (of 3)	John Morley	1904
+12922	Burke	John Morley	1907
+16835	An Interpretation of Rudolf Eucken's Philosophy	W. Tudor Jones	1912
+5717	Bergson and His Philosophy	J. Alexander Gunn	1920
+1347	A New Philosophy: Henri Bergson	Edouard le Roy	1912
+29033	Critical Miscellanies (Vol. 3 of 3)	John Morley	1904
