@@ -34,7 +34,7 @@ def main():
 	daysOld = datetime.date.today() - datetime.datetime.strptime(features['date'],'%Y-%m-%d').date()
 	print "Last game is ", daysOld, " days old. From ", features['date']
 
-	if daysOld.days <= 3:
+	if (datetime.datetime.today().weekday()==0 and daysOld.days <= 3) or (datetime.datetime.today().weekday()<=4 and daysOld.days <= 1):
 		tweetProb(features)
 
 

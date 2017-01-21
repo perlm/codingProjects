@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests, string, time, re, os, sys,datetime
 
 #####
-# The objective of this script is to scrape data from the Jeopardy archive so that it can beanalyzed and I can make a predictive model.
+# The objective of this script is to scrape data from the Jeopardy archive so that it can be analyzed and I can make a predictive model.
 #####
 
 def getNameDictionary():
